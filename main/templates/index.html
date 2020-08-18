@@ -1,0 +1,83 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UFT-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자소설 닷컴</title>
+    <link rel="stylesheet" type="text/css" href="{%static 'css/index.css'%}">
+</head>
+
+<body>
+
+    {% if user.is_authenticated %} <!--로그인이 된 상태라면 True로 반환-->
+
+    <a href="{% url 'logout' %}">
+        <button>로그아웃</button>
+    </a>
+   
+    안녕하세요 {{user}}님 <!--AnonymousUseer는 로그인된 상태가 아니라는 것-->
+
+    {% else %} <!--로그인된 상태가 아니라면-->
+
+    <a href="{% url 'signup' %}">
+        <button>회원가입</button>
+    </a>
+
+    <a href="{% url 'login' %}">
+        <button>로그인</button>
+    </a>
+
+    {% endif %}
+
+
+    
+
+
+    <div class="make_jss">
+        <a href="{% url 'create' %}">
+            <div class="plus_btn">
+                +
+            </div>
+        </a>
+
+        <p>자기소개서 작성</p>
+    </div>
+     
+    {% if user.is_authenticated %}
+    <a href="{% url 'my_index' %}">
+        <button>내 자기소개서만 보기</button>
+    </a>
+    <a href="{% url 'index' %}">
+        <button>모든 자기소개서 보기</button>
+    </a>
+    {% endif %}
+    <br>
+
+    <div class="all_jss">
+        <p>자기소개서 제목</p>
+
+        <p>자기소개서 내용</p>
+
+        <p>날짜</p>
+    </div>
+
+    {% for jss in all_jss %}
+    <a href="{% url 'detail' jss.id %}"> <!--detail로 jss.id(pk)값을 보내줌-->
+        <div class="all_jss"> <!--템프릿언어를 이용해 값을 가져옴-->
+            <p>{{jss.author}}</p>
+            <!--pk-->
+
+            <p>{{jss.title}}</p>
+
+            <p>{{jss.content}}</p>
+
+            <p>{{jss.updated_at|date:"Y-m-d"}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</body>
+
+</html>
