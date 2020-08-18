@@ -16,7 +16,7 @@ class JssForm(forms.ModelForm):
             'placeholder':'제목',
         })
         self.fields['content'].widget.attrs.update({
-            'class': 'jss_coontent_form',
+            'class': 'jss_content_form',
         })
 
 class CommentForm(forms.ModelForm):
